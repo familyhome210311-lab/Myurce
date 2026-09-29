@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Puitika AI — Jelajahi, Pelajari, Ciptakan</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #f7f4ff;
+      --surface: #ffffff;
+      --primary: #6d4aff;
+      --primary-dark: #4d2dcc;
+      --secondary: #ffb84d;
+      --text: #202038;
+      --muted: #6d6b7a;
+      --border: #e7e2f4;
+      --shadow: 0 12px 35px rgba(52, 38, 100, 0.10);
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(135deg, #5b3fe8, #8b68ff);
+      color: white;
+      padding: 18px 7%;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 4px 18px rgba(45, 25, 100, 0.18);
+    }
+
+    nav {
+      max-width: 1100px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo {
+      font-size: 1.35rem;
+      font-weight: 800;
+      letter-spacing: .3px;
+    }
+
+    .logo span {
+      color: #ffe08a;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 22px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-size: .95rem;
+      opacity: .95;
+    }
+
+    nav a:hover {
+      color: #ffe08a;
+    }
+
+    .hero {
+      max-width: 1100px;
+      margin: 45px auto;
+      padding: 0 7%;
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 35px;
+      align-items: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 4.2rem);
+      line-height: 1.05;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 span {
+      color: var(--primary);
+    }
+
+    .hero p {
+      color: var(--muted);
+      max-width: 650px;
+      font-size: 1.05rem;
+      margin-bottom: 25px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 12px;
+      padding: 12px 18px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn-light {
+      background: white;
+      color: var(--primary);
+      border: 1px solid var(--border);
+    }
+
+    .hero-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+      transform: rotate(1deg);
+    }
+
+    .hero-card .moon {
+      font-size: 3.2rem;
+      margin-bottom: 10px;
+    }
+
+    .hero-card h3 {
+      margin-bottom: 8px;
+    }
+
+    .hero-card p {
+      margin: 0;
+      font-size: .95rem;
+    }
+
+    section {
+      max-width: 1100px;
+      margin: 55px auto;
+      padding: 0 7%;
+    }
+
+    .section-title {
+      margin-bottom: 22px;
+    }
+
+    .section-title h2 {
+      font-size: 1.8rem;
+      margin-bottom: 5px;
+    }
+
+    .section-title p {
+      color: var(--muted);
+    }
+
+    .search-box {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+
+    .search-box input {
+      flex: 1;
+      padding: 13px 15px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      font-size: 1rem;
+      outline: none;
+    }
+
+    .search-box input:focus {
+      border-color: var(--primary);
+    }
+
+    .poem-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow: 0 7px 22px rgba(52, 38, 100, .06);
+    }
+
+    .card h3 {
+      margin-bottom: 6px;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 4px 9px;
+      background: #eee9ff;
+      color: var(--primary-dark);
+      border-radius: 30px;
+      font-size: .78rem;
+      font-weight: 700;
+      margin: 5px 4px 10px 0;
+    }
+
+    .poem-preview {
+      color: #4f4d5c;
+      font-style: italic;
+      margin: 10px 0 15px;
+    }
+
+    .analyzer {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .analysis-result {
+      min-height: 180px;
+      background: #fbfaff;
+      border: 1px dashed #cfc5f5;
+      border-radius: 16px;
+      padding: 18px;
+    }
+
+    textarea, select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      font-family: inherit;
+      margin: 7px 0 13px;
+      font-size: .95rem;
+    }
+
+    textarea {
+      min-height: 160px;
+      resize: vertical;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .market-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .price {
+      color: var(--primary-dark);
+      font-weight: 800;
+      font-size: 1.15rem;
+      margin: 10px 0;
+    }
+
+    footer {
+      margin-top: 70px;
+      background: #211b3b;
+      color: #ddd8ee;
+      text-align: center;
+      padding: 30px 7%;
+    }
+
+    footer strong {
+      color: white;
+    }
+
+    .empty {
+      color: var(--muted);
+      padding: 20px;
+      text-align: center;
+      grid-column: 1 / -1;
+    }
+
+    @media (max-width: 800px) {
+      .hero,
+      .analyzer {
+        grid-template-columns: 1fr;
+      }
+
+      .poem-grid,
+      .market-grid {
+        grid-template-columns: 1fr;
+      }
+
+      nav {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      nav ul {
+        gap: 12px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <nav>
+      <div class="logo">Puitika <span>AI</span></div>
+      <ul>
+        <li><a href="#jelajahi">Jelajahi</a></li>
+        <li><a href="#sejarah">Sejarah</a></li>
+        <li><a href="#analisis">Analisis</a></li>
+        <li><a href="#buat">Buat Puisi</a></li>
+        <li><a href="#karya">Karya</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+
+    <section class="hero">
+      <div>
+        <p style="color:var(--primary);font-weight:800;">📖 RUANG BELAJAR PUISI DIGITAL</p>
+        <h1>Jelajahi. <span>Pelajari.</span> Ciptakan.</h1>
+        <p>
+          Puitika AI adalah konsep aplikasi untuk menjelajahi puisi,
+          memahami karakteristiknya, dan membantu menciptakan karya baru
+          berdasarkan ide pengguna.
+        </p>
+
+        <div class="buttons">
+          <a class="btn btn-primary" href="#jelajahi">Jelajahi Puisi</a>
+          <a class="btn btn-light" href="#buat">Mulai Menulis</a>
+        </div>
+      </div>
+
+      <div class="hero-card">
+        <div class="moon">🌙</div>
+        <h3>Inspirasi Hari Ini</h3>
+        <p>
+          "Setiap kata adalah langkah kecil menuju sebuah cerita
+          yang belum pernah ditulis."
+        </p>
+      </div>
+    </section>
+
+    <section id="jelajahi">
+      <div class="section-title">
+        <h2>📚 Jelajahi Puisi</h2>
+        <p>Koleksi contoh puisi untuk dipelajari berdasarkan tema dan suasananya.</p>
+      </div>
+
+      <div class="search-box">
+        <input id="searchInput" type="text" placeholder="Cari berdasarkan judul, tema, atau kata...">
+        <button class="btn btn-primary" onclick="searchPoems()">Cari</button>
+      </div>
+
+      <div class="poem-grid" id="poemList"></div>
+    </section>
+
+
+    <section id="sejarah">
+      <div class="section-title">
+        <h2>🕰️ Sejarah Puisi Indonesia</h2>
+        <p>
+          Sepuluh karya terkenal dari penyair Indonesia. Bagian ini dibuat sebagai
+          arsip pembelajaran: mengenal judul, pengarang, tahun, dan karakteristiknya
+          tanpa menyalin teks puisi secara penuh.
+        </p>
+      </div>
+
+      <div class="poem-grid">
+        <article class="card">
+          <span class="tag">1943</span>
+          <h3>Aku</h3>
+          <p><strong>Chairil Anwar</strong></p>
+          <p class="poem-preview">Puisi yang dikenal dengan suara individual yang kuat dan semangat keteguhan diri.</p>
+        </article>
+
+        <article class="card">
+          <span class="tag">1943</span>
+          <h3>Diponegoro</h3>
+          <p><strong>Chairil Anwar</strong></p>
+          <p class="poem-preview">Mengangkat semangat perjuangan melalui tokoh Pangeran Diponegoro.</p>
+        </article>
+
+        <article class="card">
+          <span class="tag">1946</span>
+          <h3>Senja di Pelabuhan Kecil</h3>
+          <p><strong>Chairil Anwar</strong></p>
+          <p class="poem-preview">Menggambarkan kesepian, kehampaan, dan suasana senja dengan bahasa yang kuat.</p>
+        </article>
+
+        <article class="card">
+          <span class="tag">1948</span>
+          <h3>Karawang-Bekasi</h3>
+          <p><strong>Chairil Anwar</strong></p>
+          <p class="poem-preview">Puisi bertema perjuangan dan penghormatan kepada para pejuang.</p>
+        </article>
+
+        <article class="card">
+          <span class="tag">1937</span>
+          <h3>Padamu Jua</h3>
+          <p><strong>Amir Hamzah</strong></p>
+          <p class="poem-preview">Bagian dari kumpulan <em>Nyanyi Sunyi</em>, dengan nuansa spiritual dan perenungan batin.</p>
+        </article>
+
+        <article class="card">
+          <span class="tag">1966</span>
+          <h3>Karangan Bunga</h3>
+          <p><strong>Taufiq Ismail</strong></p>
+          <p class="poem-preview">Karya yang berkaitan dengan suasana demonstrasi mahasiswa dan peristiwa sosial pada 1966.</p>
+        </article>
+
+        <article class="card">
+          <span class="tag">1977</span>
+          <h3>Sajak Sebatang Lisong</h3>
+          <p><strong>W.S. Rendra</strong></p>
+          <p class="poem-preview">Puisi kritik sosial yang menyoroti pendidikan, kehidupan masyarakat, dan keadaan bangsa.</p>
+        </article>
+
+        <article class="card">
+          <span class="tag">1989</span>
+          <h3>Aku Ingin</h3>
+          <p><strong>Sapardi Djoko Damono</strong></p>
+          <p class="poem-preview">Dikenal karena bahasa yang sederhana, lembut, dan reflektif dalam menggambarkan cinta.</p>
+        </article>
+
+        <article class="card">
+          <span class="tag">1994</span>
+          <h3>Hujan Bulan Juni</h3>
+          <p><strong>Sapardi Djoko Damono</strong></p>
+          <p class="poem-preview">Puisi populer dengan citraan alam dan gagasan tentang ketabahan serta kerinduan.</p>
+        </article>
+
+        <article class="card">
+          <span class="tag">1956</span>
+          <h3>Gadis Peminta-minta</h3>
+          <p><strong>Toto Sudarto Bachtiar</strong></p>
+          <p class="poem-preview">Karya yang dikenal melalui gambaran kehidupan seorang gadis kecil dan persoalan sosial.</p>
+        </article>
+      </div>
+
+      <div class="card" style="margin-top:18px;">
+        <h3>💡 Mengapa sejarah ini ada di Puitika AI?</h3>
+        <p style="margin-top:8px;color:var(--muted);">
+          Koleksi sejarah membantu pengguna mempelajari perkembangan puisi Indonesia,
+          mengenali tema, suasana, pilihan kata, dan cara penyair menyampaikan gagasan.
+          Puitika AI menggunakan pembelajaran tersebut sebagai inspirasi untuk membuat
+          karya baru, bukan untuk menyalin karya orang lain.
+        </p>
+      </div>
+    </section>
+
+    <section id="analisis">
+      <div class="section-title">
+        <h2>🔎 Analisis Puisi</h2>
+        <p>Masukkan puisi untuk melihat analisis sederhana berdasarkan teks.</p>
+      </div>
+
+      <div class="analyzer">
+        <div class="card">
+          <label for="poemText"><strong>Teks puisi</strong></label>
+          <textarea id="poemText" placeholder="Tuliskan atau tempel puisi di sini..."></textarea>
+          <button class="btn btn-primary" onclick="analyzePoem()">Analisis Puisi</button>
+        </div>
+
+        <div class="analysis-result" id="analysisResult">
+          <strong>Hasil analisis akan muncul di sini.</strong>
+          <p style="color:var(--muted);margin-top:8px;">
+            Prototype ini menggunakan analisis sederhana. AI yang sebenarnya
+            dapat dikembangkan pada tahap berikutnya.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="buat">
+      <div class="section-title">
+        <h2>✍️ Bantu Buat Puisi</h2>
+        <p>Tentukan ide dasar, lalu Puitika AI membuat contoh puisi sederhana.</p>
+      </div>
+
+      <div class="card">
+        <div class="form-row">
+          <div>
+            <label><strong>Tema</strong></label>
+            <select id="theme">
+              <option value="persahabatan">Persahabatan</option>
+              <option value="alam">Alam</option>
+              <option value="cita-cita">Cita-cita</option>
+              <option value="sekolah">Sekolah</option>
+              <option value="keluarga">Keluarga</option>
+            </select>
+          </div>
+
+          <div>
+            <label><strong>Suasana</strong></label>
+            <select id="mood">
+              <option value="hangat">Hangat</option>
+              <option value="tenang">Tenang</option>
+              <option value="semangat">Semangat</option>
+              <option value="haru">Haru</option>
+            </select>
+          </div>
+        </div>
+
+        <button class="btn btn-primary" onclick="generatePoem()">Buat Contoh Puisi</button>
+
+        <div class="analysis-result" id="generatedPoem" style="margin-top:18px;">
+          <strong>Puisi hasil generasi akan muncul di sini.</strong>
+        </div>
+      </div>
+    </section>
+
+    <section id="karya">
+      <div class="section-title">
+        <h2>🛍️ Karya Pilihan</h2>
+        <p>Contoh konsep halaman untuk mempublikasikan atau menjual karya puisi.</p>
+      </div>
+
+      <div class="market-grid">
+        <div class="card">
+          <span class="tag">Alam</span>
+          <h3>Langit Setelah Hujan</h3>
+          <p class="poem-preview">Puisi original tentang harapan yang muncul setelah masa sulit.</p>
+          <div class="price">Rp5.000</div>
+          <button class="btn btn-light" onclick="alert('Fitur pembelian masih berupa prototype.')">Lihat Karya</button>
+        </div>
+
+        <div class="card">
+          <span class="tag">Persahabatan</span>
+          <h3>Teman di Ujung Senja</h3>
+          <p class="poem-preview">Sebuah karya tentang kenangan dan arti seorang sahabat.</p>
+          <div class="price">Rp5.000</div>
+          <button class="btn btn-light" onclick="alert('Fitur pembelian masih berupa prototype.')">Lihat Karya</button>
+        </div>
+
+        <div class="card">
+          <span class="tag">Cita-cita</span>
+          <h3>Langkah Pertama</h3>
+          <p class="poem-preview">Puisi tentang keberanian mengejar mimpi dari hal kecil.</p>
+          <div class="price">Rp5.000</div>
+          <button class="btn btn-light" onclick="alert('Fitur pembelian masih berupa prototype.')">Lihat Karya</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <strong>Puitika AI</strong>
+    <p>Proyek pembelajaran AI & teknologi web — dibuat sebagai prototype siswa.</p>
+  </footer>
+
+  <script>
+    const poems = [
+      {
+        title: "Langit Pagi",
+        theme: "Alam",
+        mood: "Tenang",
+        text: "Pagi membuka jendela cahaya, embun perlahan meninggalkan daun."
+      },
+      {
+        title: "Teman Seperjalanan",
+        theme: "Persahabatan",
+        mood: "Hangat",
+        text: "Kita berjalan bersama, membawa cerita yang tumbuh di setiap langkah."
+      },
+      {
+        title: "Mimpi yang Tumbuh",
+        theme: "Cita-cita",
+        mood: "Semangat",
+        text: "Mimpi tidak selalu datang dengan suara keras, kadang ia tumbuh diam-diam."
+      }
+    ];
+
+    function displayPoems(data) {
+      const list = document.getElementById("poemList");
+
+      if (data.length === 0) {
+        list.innerHTML = '<div class="empty">Puisi yang kamu cari belum ditemukan.</div>';
+        return;
+      }
+
+      list.innerHTML = data.map(poem => `
+        <article class="card">
+          <span class="tag">${poem.theme}</span>
+          <span class="tag">${poem.mood}</span>
+          <h3>${poem.title}</h3>
+          <p class="poem-preview">"${poem.text}"</p>
+          <button class="btn btn-light" onclick="showPoem('${poem.title}')">
+            Pelajari
+          </button>
+        </article>
+      `).join("");
+    }
+
+    function searchPoems() {
+      const keyword = document.getElementById("searchInput").value.toLowerCase().trim();
+
+      const results = poems.filter(poem =>
+        poem.title.toLowerCase().includes(keyword) ||
+        poem.theme.toLowerCase().includes(keyword) ||
+        poem.mood.toLowerCase().includes(keyword) ||
+        poem.text.toLowerCase().includes(keyword)
+      );
+
+      displayPoems(results);
+    }
+
+    function showPoem(title) {
+      const poem = poems.find(item => item.title === title);
+
+      alert(
+        "Judul: " + poem.title +
+        "\\nTema: " + poem.theme +
+        "\\nSuasana: " + poem.mood +
+        "\\n\\nKarakteristik dapat dikembangkan lagi pada versi AI berikutnya."
+      );
+    }
+
+    function analyzePoem() {
+      const text = document.getElementById("poemText").value.trim();
+      const result = document.getElementById("analysisResult");
+
+      if (!text) {
+        result.innerHTML = "<strong>Silakan masukkan teks puisi terlebih dahulu.</strong>";
+        return;
+      }
+
+      const words = text.split(/\s+/).filter(Boolean);
+      const lines = text.split("\n").filter(line => line.trim()).length;
+
+      let mood = "netral";
+      const lower = text.toLowerCase();
+
+      if (lower.includes("cinta") || lower.includes("rindu") || lower.includes("sayang")) {
+        mood = "emosional";
+      } else if (lower.includes("mimpi") || lower.includes("berjuang") || lower.includes("semangat")) {
+        mood = "semangat";
+      } else if (lower.includes("hujan") || lower.includes("senja") || lower.includes("sunyi")) {
+        mood = "tenang/melankolis";
+      }
+
+      result.innerHTML = `
+        <h3>Hasil Analisis Sederhana</h3>
+        <p><strong>Jumlah kata:</strong> ${words.length}</p>
+        <p><strong>Jumlah baris:</strong> ${lines}</p>
+        <p><strong>Suasana yang terdeteksi:</strong> ${mood}</p>
+        <p style="margin-top:10px;color:var(--muted);">
+          Catatan: hasil ini masih berupa prototype dan belum menggunakan model AI sungguhan.
+        </p>
+      `;
+    }
+
+    function generatePoem() {
+      const theme = document.getElementById("theme").value;
+      const mood = document.getElementById("mood").value;
+      const output = document.getElementById("generatedPoem");
+
+      const templates = {
+        persahabatan: [
+          "Di antara langkah yang panjang,",
+          "ada tawa yang tetap tinggal,",
+          "sebab perjalanan terasa ringan,",
+          "ketika sahabat berjalan di samping."
+        ],
+        alam: [
+          "Angin menyentuh ujung daun,",
+          "langit menyimpan warna pagi,",
+          "alam berbisik dengan tenang,",
+          "mengajarkan hati untuk kembali."
+        ],
+        "cita-cita": [
+          "Kutatap jalan di hadapan,",
+          "meski langkah belum sempurna,",
+          "mimpi kupeluk perlahan,",
+          "dan keberanian menjadi cahaya."
+        ],
+        sekolah: [
+          "Di ruang kecil tempat belajar,",
+          "kita menanam banyak harapan,",
+          "setiap halaman menjadi pijakan,",
+          "menuju masa depan."
+        ],
+        keluarga: [
+          "Di rumah ada cahaya sederhana,",
+          "suara yang selalu menenangkan,",
+          "tempat lelah menemukan jeda,",
+          "dan hati kembali pulang."
+        ]
+      };
+
+      output.innerHTML = `
+        <h3>Puisi tentang ${theme}</h3>
+        <p style="color:var(--muted);">Suasana: ${mood}</p>
+        <p class="poem-preview" style="white-space:pre-line;margin-top:12px;">
+${templates[theme].join("\n")}
+        </p>
+        <small>Ini masih prototype. Pada tahap berikutnya, bagian ini dapat dihubungkan dengan model AI.</small>
+      `;
+    }
+
+    displayPoems(poems);
+  </script>
+
+</body>
+</html>
